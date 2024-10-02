@@ -3,8 +3,11 @@ import 'package:practice5/global/lists.dart';
 import 'package:practice5/pages/item_page.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard(
-      {super.key, required this.itemIndex, required this.toggleFavourite});
+  const ItemCard({
+    super.key,
+    required this.itemIndex,
+    required this.toggleFavourite,
+  });
 
   final int itemIndex; // Проп для названия заметки
   final Function toggleFavourite;

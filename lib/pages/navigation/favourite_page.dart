@@ -30,9 +30,10 @@ class _FavouritePageState extends State<FavouritePage> {
     });
   }
 
-  void _removeNote(int index) {
+  void _removeItem(int index) {
     setState(() {
       items.removeAt(index);
+      Navigator.pop(context);
     });
   }
 

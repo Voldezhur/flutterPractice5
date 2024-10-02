@@ -30,12 +30,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _removeNote(int index) {
-    setState(() {
-      items.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:practice5/global/lists.dart';
 
-class ItemPage extends StatelessWidget {
-  const ItemPage({super.key, required this.itemIndex});
+class ItemPage extends StatefulWidget {
+  const ItemPage({
+    super.key,
+    required this.itemIndex,
+  });
 
   final int itemIndex;
 
   @override
+  State<ItemPage> createState() => _ItemPageState();
+}
+
+class _ItemPageState extends State<ItemPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(items[itemIndex].title)),
+      appBar: AppBar(
+        title: Text(items[widget.itemIndex].title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                items.removeAt(widget.itemIndex);
+                debugPrint(items.toString());
+                Navigator.pop(context);
+              });
+            },
+            icon: const Icon(Icons.delete),
+          )
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
             Image.network(
-              items[itemIndex].imageLink,
+              items[widget.itemIndex].imageLink,
               height: 300,
             ),
             Container(
@@ -26,7 +48,7 @@ class ItemPage extends StatelessWidget {
             Expanded(
                 child: SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Text(items[itemIndex].description))),
+                    child: Text(items[widget.itemIndex].description))),
           ],
         ),
       ),
