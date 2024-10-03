@@ -31,7 +31,7 @@ class ItemCard extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
                 color: Theme.of(context).primaryColor),
             child: Center(
-                child: Row(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Image.network(
@@ -47,25 +47,24 @@ class ItemCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       // Кнопка перехода на другую страницу
-                      Column(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Text(
-                              items[itemIndex].title,
-                              overflow: TextOverflow.visible,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Text(
-                                items[itemIndex].author,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 11),
-                              ))
-                        ],
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Text(
+                          items[itemIndex].title,
+                          overflow: TextOverflow.visible,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Text(
+                            items[itemIndex].author,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 11),
+                          )),
+                      const SizedBox(
+                        height: 20,
                       ),
                       Text(
                         "Страниц: ${items[itemIndex].pageCount}",

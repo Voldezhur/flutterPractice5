@@ -44,7 +44,12 @@ class _HomePageState extends State<HomePage> {
                 textAlign: TextAlign.center,
               ),
             )
-          : ListView.builder(
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: (MediaQuery.of(context).size.width) /
+                    (MediaQuery.of(context).size.height / 1.2),
+              ),
               itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
                 return ItemCard(
