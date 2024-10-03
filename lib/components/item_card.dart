@@ -34,15 +34,19 @@ class ItemCard extends StatelessWidget {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.network(
-                  items[itemIndex].imageLink,
-                  height: 100,
+                Container(
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(color: Colors.black12, width: 2))),
+                  padding: EdgeInsets.all(6),
+                  width: MediaQuery.sizeOf(context).width / 3,
+                  child: Image.network(
+                    items[itemIndex].imageLink,
+                    height: 100,
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
-                      border: Border(
-                          top: BorderSide(color: Colors.black12, width: 2))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -51,7 +55,8 @@ class ItemCard extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: Text(
                           items[itemIndex].title,
-                          overflow: TextOverflow.visible,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: const TextStyle(
                               color: Colors.white, fontSize: 20),
                         ),
