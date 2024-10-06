@@ -24,9 +24,16 @@ class _FavouritePageState extends State<FavouritePage> {
     }
   }
 
-  void _toggleFavourite(int index) {
+  void _toggleFavourite(int id) {
     setState(() {
-      items[index].favourite = !items[index].favourite;
+      // items[index].favourite = !items[index].favourite;
+      // Тогглим флаг любимого по id книги
+      items.map((item) {
+        if (item.id == id) item.favourite = !item.favourite;
+      }).toList();
+
+      // Обновляем список любимых книг
+      favourites = items.where((item) => item.favourite == true).toList();
     });
   }
 
@@ -57,14 +64,20 @@ class _FavouritePageState extends State<FavouritePage> {
                 childAspectRatio: (MediaQuery.of(context).size.width) /
                     (MediaQuery.of(context).size.height / 1.2),
               ),
-              itemCount: items.length,
+              itemCount: favourites.length,
               itemBuilder: (BuildContext context, int index) {
-                return items[index].favourite
-                    ? ItemCard(
-                        itemIndex: index,
-                        toggleFavourite: _toggleFavourite,
-                      )
-                    : const SizedBox();
+                // return items[index].favourite
+                //     ? ItemCard(
+                //         itemIndex: index,
+                //         toggleFavourite: _toggleFavourite,
+                //       )
+                //     : const SizedBox.shrink();
+
+                return ItemCard(
+                  itemIndex: index,
+                  toggleFavourite: _toggleFavourite,
+                  itemList: favourites,
+                );
               }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddNote(context),

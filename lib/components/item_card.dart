@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:practice5/global/lists.dart';
 import 'package:practice5/pages/item_page.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({
-    super.key,
-    required this.itemIndex,
-    required this.toggleFavourite,
-  });
+  const ItemCard(
+      {super.key,
+      required this.itemIndex,
+      required this.toggleFavourite,
+      required this.itemList});
 
   final int itemIndex; // Проп для названия заметки
   final Function toggleFavourite;
+  final List itemList;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class ItemCard extends StatelessWidget {
                   decoration: const BoxDecoration(
                       border: Border(
                           bottom: BorderSide(color: Colors.black12, width: 2))),
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   width: MediaQuery.sizeOf(context).width / 3,
                   child: Image.network(
-                    items[itemIndex].imageLink,
+                    itemList[itemIndex].imageLink,
                     height: 100,
                   ),
                 ),
@@ -54,7 +54,7 @@ class ItemCard extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: Text(
-                          items[itemIndex].title,
+                          itemList[itemIndex].title,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: const TextStyle(
@@ -64,7 +64,7 @@ class ItemCard extends StatelessWidget {
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: Text(
-                            items[itemIndex].author,
+                            itemList[itemIndex].author,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 11),
                           )),
@@ -72,7 +72,7 @@ class ItemCard extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "Страниц: ${items[itemIndex].pageCount}",
+                        "Страниц: ${itemList[itemIndex].pageCount}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -80,12 +80,12 @@ class ItemCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(
-                    items[itemIndex].favourite
+                    itemList[itemIndex].favourite
                         ? Icons.favorite
                         : Icons.favorite_outline,
                     color: Colors.white,
                   ),
-                  onPressed: () => toggleFavourite(itemIndex),
+                  onPressed: () => toggleFavourite(itemList[itemIndex].id),
                 )
               ],
             )),

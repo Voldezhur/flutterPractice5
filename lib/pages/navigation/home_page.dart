@@ -24,9 +24,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _toggleFavourite(int index) {
+  void _toggleFavourite(int id) {
     setState(() {
-      items[index].favourite = !items[index].favourite;
+      // items[index].favourite = !items[index].favourite;
+      // Тогглим флаг любимого по id книги
+      items.map((item) {
+        if (item.id == id) item.favourite = !item.favourite;
+      }).toList();
+
+      // Обновляем список любимых книг
+      favourites = items.where((item) => item.favourite == true).toList();
     });
   }
 
@@ -55,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                 return ItemCard(
                   itemIndex: index,
                   toggleFavourite: _toggleFavourite,
+                  itemList: items,
                 );
               }),
       floatingActionButton: FloatingActionButton(
