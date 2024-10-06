@@ -47,18 +47,6 @@ class _AddBookPageState extends State<AddBookPage> {
                 decoration: const InputDecoration(
                     labelText: 'Введите ссылку на обложку книги:'),
               ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // imageLinkController.text.isNotEmpty
-              //     ? Image.network(
-              //         imageLinkController.text,
-              //         height: 100,
-              //       )
-              //     : Image.network(
-              //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlIZqZsvzHw2ueUfWq3DOk7gveV_n_LZxsVA&s",
-              //         height: 100,
-              //       ),
               TextField(
                 controller: descriptionController,
                 decoration: const InputDecoration(
@@ -69,20 +57,27 @@ class _AddBookPageState extends State<AddBookPage> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    // Собираем информацию с текстовых полей
                     String newTitle = titleController.text;
                     String newAuthor = authorController.text;
                     int newPageNum = int.parse(pageNumberController.text);
                     String newImageLink = imageLinkController.text;
                     String newDescription = descriptionController.text;
 
-                    Item newBook = Item(items.length, newTitle, newAuthor,
+                    // Получаем id новой книги - такой, чтобы не было повторений
+                    var maxId = items.reduce((currentItem, nextItem) =>
+                        currentItem.id > nextItem.id ? currentItem : nextItem);
+
+                    // Создаем новый объект
+                    Item newBook = Item(maxId.id + 1, newTitle, newAuthor,
                         newPageNum, newImageLink, newDescription, false);
 
                     if (newBook.title.isNotEmpty &&
                         newBook.author.isNotEmpty &&
                         newBook.imageLink.isNotEmpty &&
                         newBook.description.isNotEmpty) {
-                      Navigator.pop(context, newBook);
+                      Navigator.pop(
+                          context, newBook); // Передаем новую книгу наверх
                     }
                   },
                   child: const Text("Добавить книгу"))

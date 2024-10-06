@@ -20,6 +20,7 @@ class _MainPageState extends State<MainPage> {
     ProfilePage()
   ];
 
+  // Переход между страницами
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;

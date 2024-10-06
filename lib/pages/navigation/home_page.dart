@@ -11,15 +11,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Переход на страницу добавления новой книги
   void _navigateToAddNote(BuildContext context) async {
+    // Ждем возвращения со страницы добавления новой книги
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const AddBookPage()),
     );
 
+    // Вместе с выходом нам передался result - в нем новая книга
     if (result != null) {
       setState(() {
-        items.add(result);
+        items.add(result); // Добавляем новую книгу в список
       });
     }
   }
