@@ -23,9 +23,7 @@ class _ItemPageState extends State<ItemPage> {
           IconButton(
             onPressed: () {
               setState(() {
-                items.removeAt(widget.itemIndex);
-                debugPrint(items.toString());
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               });
             },
             icon: const Icon(Icons.delete),

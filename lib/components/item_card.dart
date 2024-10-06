@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:practice5/global/lists.dart';
 import 'package:practice5/pages/item_page.dart';
 
-class ItemCard extends StatelessWidget {
-  const ItemCard(
-      {super.key,
-      required this.itemIndex,
-      required this.toggleFavourite,
-      required this.itemList});
+class ItemCard extends StatefulWidget {
+  const ItemCard({
+    super.key,
+    required this.itemIndex,
+    required this.toggleFavourite,
+    required this.itemList,
+    required this.refresh,
+  });
 
   final int itemIndex; // Проп для названия заметки
   final Function toggleFavourite;
   final List itemList;
+  final Function refresh;
+
+  @override
+  State<ItemCard> createState() => _ItemCardState();
+}
+
+class _ItemCardState extends State<ItemCard> {
+  void _goToItemPage(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ItemPage(
+              itemIndex: items.indexWhere(
+                  (item) => item.id == widget.itemList[widget.itemIndex].id))),
+    );
+
+    if (result == true) {
+      setState(() {
+        items.removeAt(items.indexWhere(
+            (item) => item.id == widget.itemList[widget.itemIndex].id));
+        // Обновляем список любимых книг
+        favourites = items.where((item) => item.favourite == true).toList();
+        widget.refresh();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +47,7 @@ class ItemCard extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         // Виджет для того, чтобы весь child стал кликабельным
         child: GestureDetector(
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ItemPage(
-                        itemIndex: itemIndex,
-                      ))),
+          onTap: () => _goToItemPage(context),
           child: Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.2,
@@ -41,7 +65,7 @@ class ItemCard extends StatelessWidget {
                   padding: const EdgeInsets.all(6),
                   width: MediaQuery.sizeOf(context).width / 3,
                   child: Image.network(
-                    itemList[itemIndex].imageLink,
+                    widget.itemList[widget.itemIndex].imageLink,
                     height: 100,
                   ),
                 ),
@@ -54,7 +78,7 @@ class ItemCard extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: Text(
-                          itemList[itemIndex].title,
+                          widget.itemList[widget.itemIndex].title,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: const TextStyle(
@@ -64,7 +88,7 @@ class ItemCard extends StatelessWidget {
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: Text(
-                            itemList[itemIndex].author,
+                            widget.itemList[widget.itemIndex].author,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 11),
                           )),
@@ -72,7 +96,7 @@ class ItemCard extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "Страниц: ${itemList[itemIndex].pageCount}",
+                        "Страниц: ${widget.itemList[widget.itemIndex].pageCount}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -80,12 +104,13 @@ class ItemCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(
-                    itemList[itemIndex].favourite
+                    widget.itemList[widget.itemIndex].favourite
                         ? Icons.favorite
                         : Icons.favorite_outline,
                     color: Colors.white,
                   ),
-                  onPressed: () => toggleFavourite(itemList[itemIndex].id),
+                  onPressed: () => widget
+                      .toggleFavourite(widget.itemList[widget.itemIndex].id),
                 )
               ],
             )),

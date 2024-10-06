@@ -24,6 +24,11 @@ class _FavouritePageState extends State<FavouritePage> {
     }
   }
 
+  // Функция для обновения стейта
+  void _refreshState() {
+    setState(() {});
+  }
+
   void _toggleFavourite(int id) {
     setState(() {
       // items[index].favourite = !items[index].favourite;
@@ -77,6 +82,7 @@ class _FavouritePageState extends State<FavouritePage> {
                   itemIndex: index,
                   toggleFavourite: _toggleFavourite,
                   itemList: favourites,
+                  refresh: _refreshState,
                 );
               }),
       floatingActionButton: FloatingActionButton(
